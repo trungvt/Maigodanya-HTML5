@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <title>まいごだニャ</title>
+    <link href='maigodanya/images/Icon.png' rel='shortcut icon' type='image/vnd.microsoft.icon' />
+    <link href='maigodanya/images/Icon.png' rel='icon' type='image/vnd.microsoft.icon' />
+    <link type="text/css" rel="Stylesheet" charset="utf-8" media="all" href="style.css" />
+    <script type="text/javascript" src="jsg/js/lib/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+
+        var appManager;
+        var app;
+        var result;
+
+        window.onload = function() {
+            result = document.getElementById("result");
+            appManager = document.getElementById("appmgr");
+            app = appManager.getOwnerApplication(document);
+            app.show();
+            app.activateInput(true);
+            
+            /////// setValue()呼び出しサンプル ここから
+            var keyset = app.privateData.keyset;
+            var keysetValue = keyset.RED | keyset.GREEN | keyset.YELLOW | keyset.BLUE | keyset.NAVIGATION | keyset.VCR | keyset.SCROLL | keyset.INFO | keyset.NUMERIC | keyset.ALPHA | keyset.OTHER;
+            var otherKeys = new Array(
+                403,    // close the window
+                404,    // open the window
+                409,    // 0x199 電源
+                500,    // 0x1F4 スリープ
+                427,    // 0x1AB チャンネル
+                428,    // 0x1AC チャンネル
+                503,    // 0x1F7 地デジ
+                504,    // 0x1F8 BS
+                505,    // 0x1F9 CATV
+                506,    // 0x1FA ３桁入力CH
+                507,    // 0x1FB VOD
+                508,    // 0x1FC ブラウザ
+                462,    // 0x1CE メニュー
+                509,    // 0x1FD 番組表
+                510,    // 0x1FE ｄ
+                461,    // 0x1CD 戻る
+                511,    // 0x1FF お好み
+                512,    // 0x200 検索
+                513,    // 0x201 ＣＨ一覧
+                514,    // 0x202 ＣＨリターン
+                515,    // 0x203 映像
+                516,    // 0x204 音声
+                460,    // 0x1CC 字幕
+                416,    // 0x1A0 録画
+                517,    // 0x205 録画一覧
+                518,    // 0x206 予約一覧
+                519     // 0x207 再生パネル
+            );
+            try {
+                keyset.setValue(keysetValue, otherKeys);
+            } catch(e) {
+                // error
+            }
+            /////// setValue()呼び出しサンプル ここまで
+        }
+
+        function keyDown(event) {
+            if (event.keyCode == 403)
+                window.close();
+        }
+
+        function keyPress(event) {
+            if (event.keyCode == 403)
+                window.close();
+        }
+
+        function keyUp(event) {
+            if (event.keyCode == 403)
+                window.close();
+        }
+
+    </script>
+  </head>
+  <body onkeydown="keyDown(event)" onkeyup="keyUp(event)" onkeypress="keyPress(event)">
+    <script type="text/javascript">
+        isNetFront = (navigator.userAgent.indexOf('NetFront') >= 0);
+        if (isNetFront)
+          document.write('<object id="appmgr" type="application/oipfApplicationManager" style="position: absolute; left: 0px; top: 0px; width: 0px; height: 0px;"></object>');
+        else
+          document.write('<img src="maigodanya/images/Default@2x.png" />');
+    </script>
+
+    <audio id="playgame" src="maigodanya/sound/kibou.mp3"></audio>
+
+    <script type="text/javascript" src="jsg/js/jsg_web.js"></script>
+
+    <script type="text/javascript" src="jsg/js/jsg.js"></script>
+    <script type="text/javascript" src="jsg/js/id_generator.js"></script>
+    <script type="text/javascript" src="jsg/js/callback.js"></script>
+    <script type="text/javascript" src="jsg/js/tick.js"></script>
+    <script type="text/javascript" src="jsg/js/image_cache.js"></script>
+    <script type="text/javascript" src="jsg/js/touch.js"></script>
+
+    <script type="text/javascript" src="covas/js/covas.js"></script>
+    <script type="text/javascript" src="covas/js/lib/underscore-min.js"></script>
+    <script type="text/javascript" src="covas/js/lib/tweenjs-r6.min.js"></script>
+    <script type="text/javascript" src="covas/js/stage.js"></script>
+    <script type="text/javascript" src="covas/js/node.js"></script>
+    <script type="text/javascript" src="covas/js/scene.js"></script>
+    <script type="text/javascript" src="covas/js/image_view.js"></script>
+    <script type="text/javascript" src="covas/js/sprite.js"></script>
+    <script type="text/javascript" src="covas/js/image_button.js"></script>
+    <script type="text/javascript" src="covas/js/label.js"></script>
+    <script type="text/javascript" src="covas/js/button.js"></script>
+    <script type="text/javascript" src="covas/js/scroll_view.js"></script>
+    <script type="text/javascript" src="covas/js/node_touch.js"></script>
+    <script type="text/javascript" src="covas/js/anim.js"></script>
+
+    <img src="maigodanya/images/buttons/backtopImg.png" />
+    <img src="maigodanya/images/buttons/backtopImg2.png" />
+    <img src="maigodanya/images/buttons/gamestartBtn.png" />
+    <img src="maigodanya/images/buttons/howtoBtn.png" />
+    <img src="maigodanya/images/buttons/pausecontinueImg.png" />
+    <img src="maigodanya/images/buttons/pauseImgBtn.png" />
+    <img src="maigodanya/images/buttons/pauserestartImg.png" />
+    <img src="maigodanya/images/buttons/pausetopImg.png" />
+    <img src="maigodanya/images/buttons/trygameimg.png" />
+<!--
+    <img src="maigodanya/images/cats/brownneko_hover01.png" />
+    <img src="maigodanya/images/cats/brownneko_hover02.png" />
+    <img src="maigodanya/images/cats/brownneko_hover03.png" />
+-->
+    <img src="maigodanya/images/cats/brownneko_nomal01.png" />
+    <img src="maigodanya/images/cats/brownneko_nomal02.png" />
+    <img src="maigodanya/images/cats/brownneko_nomal03.png" />
+    <img src="maigodanya/images/cats/brownneko_nomal04.png" />
+    <img src="maigodanya/images/cats/brownneko_run01.png" />
+<!--
+    <img src="maigodanya/images/cats/brownneko_sippai01.png" />
+    <img src="maigodanya/images/cats/brownneko_sippai02.png" />
+    <img src="maigodanya/images/cats/brownneko_sippai03.png" />
+-->
+    <img src="maigodanya/images/cats/gamecat01.png" />
+    <img src="maigodanya/images/cats/gamecat02.png" />
+    <img src="maigodanya/images/cats/gamecat03.png" />
+    <img src="maigodanya/images/cats/gamecat04.png" />
+<!--
+    <img src="maigodanya/images/cats/grayneko_hover01.png" />
+    <img src="maigodanya/images/cats/grayneko_hover02.png" />
+    <img src="maigodanya/images/cats/grayneko_hover03.png" />
+-->
+    <img src="maigodanya/images/cats/grayneko_normal01.png" />
+    <img src="maigodanya/images/cats/grayneko_normal02.png" />
+    <img src="maigodanya/images/cats/grayneko_normal03.png" />
+    <img src="maigodanya/images/cats/grayneko_normal04.png" />
+    <img src="maigodanya/images/cats/grayneko_normal05.png" />
+    <img src="maigodanya/images/cats/grayneko_run01.png" />
+<!--
+    <img src="maigodanya/images/cats/grayneko_shippai01.png" />
+    <img src="maigodanya/images/cats/grayneko_shippai02.png" />
+    <img src="maigodanya/images/cats/grayneko_shippai03.png" />
+-->
+<!--
+    <img src="maigodanya/images/cats/kuroneko_hover01.png" />
+    <img src="maigodanya/images/cats/kuroneko_hover02.png" />
+    <img src="maigodanya/images/cats/kuroneko_hover03.png" />
+    <img src="maigodanya/images/cats/kuroneko_hover04.png" />
+-->
+    <img src="maigodanya/images/cats/kuroneko_nomal01.png" />
+    <img src="maigodanya/images/cats/kuroneko_nomal02.png" />
+    <img src="maigodanya/images/cats/kuroneko_nomal03.png" />
+    <img src="maigodanya/images/cats/kuroneko_nomal04.png" />
+    <img src="maigodanya/images/cats/kuroneko_nomal05.png" />
+    <img src="maigodanya/images/cats/kuroneko_run01.png" />
+<!--
+    <img src="maigodanya/images/cats/kuroneko_shippai01.png" />
+    <img src="maigodanya/images/cats/kuroneko_shippai02.png" />
+    <img src="maigodanya/images/cats/kuroneko_shippai03.png" />
+-->
+    <img src="maigodanya/images/cats/next_cat01.png" />
+    <img src="maigodanya/images/cats/next_cat02.png" />
+    <img src="maigodanya/images/cats/next_cat03.png" />
+    <img src="maigodanya/images/cats/next_cat04.png" />
+<!--
+    <img src="maigodanya/images/cats/shironeko_hover01.png" />
+    <img src="maigodanya/images/cats/shironeko_hover02.png" />
+    <img src="maigodanya/images/cats/shironeko_hover03.png" />
+-->
+    <img src="maigodanya/images/cats/shironeko_normal01.png" />
+    <img src="maigodanya/images/cats/shironeko_normal02.png" />
+    <img src="maigodanya/images/cats/shironeko_normal03.png" />
+    <img src="maigodanya/images/cats/shironeko_run01.png" />
+<!--
+    <img src="maigodanya/images/cats/shironeko_shippai01.png" />
+    <img src="maigodanya/images/cats/shironeko_shippai02.png" />
+    <img src="maigodanya/images/cats/shironeko_shippai03.png" />
+-->
+    <img src="maigodanya/images/game/backgameImg01.png" />
+    <img src="maigodanya/images/game/backgameImg02.png" />
+    <img src="maigodanya/images/game/backgameImg03.png" />
+    <img src="maigodanya/images/game/next_img1.png" />
+<!--
+    <img src="maigodanya/images/game/next_img2.png" />
+    <img src="maigodanya/images/game/next_img3.png" />
+-->
+    <img src="maigodanya/images/game/ready.png" />
+    <img src="maigodanya/images/game/readygo.png" />
+    <img src="maigodanya/images/game/timeover.png" />
+    <img src="maigodanya/images/game/wrong01.png" />
+    <img src="maigodanya/images/game/finish.png" />
+    <img src="maigodanya/images/howtopgame.png" />
+<!--
+    <img src="maigodanya/images/numbers/num_l-0.png" />
+    <img src="maigodanya/images/numbers/num_l-1.png" />
+    <img src="maigodanya/images/numbers/num_l-2.png" />
+    <img src="maigodanya/images/numbers/num_l-3.png" />
+    <img src="maigodanya/images/numbers/num_l-4.png" />
+    <img src="maigodanya/images/numbers/num_l-5.png" />
+    <img src="maigodanya/images/numbers/num_l-6.png" />
+    <img src="maigodanya/images/numbers/num_l-7.png" />
+    <img src="maigodanya/images/numbers/num_l-8.png" />
+    <img src="maigodanya/images/numbers/num_l-9.png" />
+    <img src="maigodanya/images/numbers/num_ll.png" />
+-->
+
+    <img src="maigodanya/images/numbers/num_m-0.png" />
+    <img src="maigodanya/images/numbers/num_m-1.png" />
+    <img src="maigodanya/images/numbers/num_m-2.png" />
+    <img src="maigodanya/images/numbers/num_m-3.png" />
+    <img src="maigodanya/images/numbers/num_m-4.png" />
+    <img src="maigodanya/images/numbers/num_m-5.png" />
+    <img src="maigodanya/images/numbers/num_m-6.png" />
+    <img src="maigodanya/images/numbers/num_m-7.png" />
+    <img src="maigodanya/images/numbers/num_m-8.png" />
+    <img src="maigodanya/images/numbers/num_m-9.png" />
+
+    <img src="maigodanya/images/numbers/num_mm.png" />
+    <img src="maigodanya/images/numbers/num_s-0.png" />
+    <img src="maigodanya/images/numbers/num_s-1.png" />
+    <img src="maigodanya/images/numbers/num_s-2.png" />
+    <img src="maigodanya/images/numbers/num_s-3.png" />
+    <img src="maigodanya/images/numbers/num_s-4.png" />
+    <img src="maigodanya/images/numbers/num_s-5.png" />
+    <img src="maigodanya/images/numbers/num_s-6.png" />
+    <img src="maigodanya/images/numbers/num_s-7.png" />
+    <img src="maigodanya/images/numbers/num_s-8.png" />
+    <img src="maigodanya/images/numbers/num_s-9.png" />
+    <img src="maigodanya/images/pause/pausebgImg02.png" />
+<!--
+    <img src="maigodanya/images/pause/pausebgImg01.png" />
+    <img src="maigodanya/images/pause/pausebgImg03.png" />
+-->
+    <img src="maigodanya/images/result/resultbgImg01.png" />
+<!--
+    <img src="maigodanya/images/result/resultbgImg02.png" />
+    <img src="maigodanya/images/result/resultbgImg03.png" />
+    <img src="maigodanya/images/result/resultbgImg04.png" />
+    <img src="maigodanya/images/result/resultbgImg05.png" />
+    <img src="maigodanya/images/result/resultbgImg06.png" />
+-->
+    <img src="maigodanya/images/result/resultMaterial/hiscoreText.png" />
+    <img src="maigodanya/images/result/resultMaterial/maigoText.png" />
+    <img src="maigodanya/images/result/resultMaterial/maxText.png" />
+    <img src="maigodanya/images/result/resultMaterial/p1.png" />
+    <img src="maigodanya/images/result/resultMaterial/p10.png" />
+    <img src="maigodanya/images/result/resultMaterial/p2.png" />
+    <img src="maigodanya/images/result/resultMaterial/p3.png" />
+    <img src="maigodanya/images/result/resultMaterial/p4.png" />
+    <img src="maigodanya/images/result/resultMaterial/p5.png" />
+    <img src="maigodanya/images/result/resultMaterial/p6.png" />
+    <img src="maigodanya/images/result/resultMaterial/p7.png" />
+    <img src="maigodanya/images/result/resultMaterial/p8.png" />
+    <img src="maigodanya/images/result/resultMaterial/p9.png" />
+    <img src="maigodanya/images/result/resultMaterial/r1.png" />
+    <img src="maigodanya/images/result/resultMaterial/r2.png" />
+    <img src="maigodanya/images/result/resultMaterial/r3.png" />
+    <img src="maigodanya/images/result/resultMaterial/r4.png" />
+    <img src="maigodanya/images/result/resultMaterial/secondText.png" />
+    <img src="maigodanya/images/result/resultMaterial/secondText2.png" />
+    <img src="maigodanya/images/result/resultMaterial/speedText.png" />
+    <img src="maigodanya/images/result/resultMaterial/timeout.png" />
+    <img src="maigodanya/images/result/resultMaterial/timeover.png" />
+    <img src="maigodanya/images/second.png" />
+    <img src="maigodanya/images/title/title01.png" />
+    <img src="maigodanya/images/title/title02.png" />
+    <img src="maigodanya/images/title/title03.png" />
+
+    <img src="maigodanya/images/top/backtopImg01.png" />
+<!--
+    <img src="maigodanya/images/top/backtopImg02.png" />
+    <img src="maigodanya/images/top/backtopImg03.png" />
+    <img src="maigodanya/images/top/backtopImg04.png" />
+    <img src="maigodanya/images/top/backtopImg05.png" />
+    <img src="maigodanya/images/top/backtopImg06.png" />
+-->
+
+    <img src="maigodanya/images/tutorial/howtobgImg01.png" />
+<!--
+    <img src="maigodanya/images/tutorial/howtobgImg02.png" />
+    <img src="maigodanya/images/tutorial/howtobgImg03.png" />
+-->
+
+<!--
+    <img src="maigodanya/images/tutorial/howtopgame.png" />
+-->
+    <img src="maigodanya/images/wanted/wanted01.png" />
+    <img src="maigodanya/images/wanted/wanted02.png" />
+    <img src="maigodanya/images/wanted/wanted03.png" />
+    <img src="maigodanya/images/wanted/wanted04.png" />
+    <img src="maigodanya/images/wanted/wantedpaper.png" />
+    <img src="maigodanya/images/keyboards/keyboard_1.png" />
+    <img src="maigodanya/images/keyboards/keyboard_2.png" />
+    <img src="maigodanya/images/keyboards/keyboard_3.png" />
+    <img src="maigodanya/images/keyboards/keyboard_4.png" />
+    <img src="maigodanya/images/keyboards/keyboard_5.png" />
+    <img src="maigodanya/images/keyboards/keyboard_6.png" />
+    <img src="maigodanya/images/keyboards/keyboard_7.png" />
+    <img src="maigodanya/images/keyboards/keyboard_8.png" />
+
+    <!-- Maigodania scripts -->
+    <script type="text/javascript" src="maigodanya/js/sound.js"></script>
+    <script type="text/javascript" src="maigodanya/js/number_cats_component.js"></script>
+    <script type="text/javascript" src="maigodanya/js/start_game_button.js"></script>
+    <script type="text/javascript" src="maigodanya/js/keyboard.js"></script>
+
+    <!-- <script type="text/javascript" src="maigodanya/js/hint_scene.js"></script> -->
+    <script type="text/javascript" src="maigodanya/js/top_scene.js"></script>
+    <script type="text/javascript" src="maigodanya/js/how_to_play_scene.js"></script>
+    <script type="text/javascript" src="maigodanya/js/play_game_scene.js"></script>
+    <script type="text/javascript" src="maigodanya/js/result_scene.js"></script>
+    <script type="text/javascript" src="maigodanya/js/config.js"></script>
+
+    <script type="text/javascript" src="maigodanya/js/result_components.js"></script>
+
+    <script type="text/javascript" src="maigodanya/js/main.js"></script>
+  </body>
+</html>
